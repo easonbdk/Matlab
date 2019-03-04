@@ -1,0 +1,97 @@
+% Particle Formation Flight
+% Author: Eason
+% Date: Dec. 24th, 2018
+%
+clear;
+clc;
+clf;
+%P_Leader = [X_t;Y_t;Z_t];
+%P_Follower_1 = [X;Y;Z];
+%V_Leader = [V_xt;V_yt;V_zt];
+%P_Follower = [V_x;V_y;V_z];
+%第一僚機位置
+X_1 = 85 ; Y_1 = 50 ; Z_1 = 300;
+%第二僚機位置
+X_2 = 100 ; Y_2 = 80 ; Z_2 = 300;
+%領頭位置
+X_t = 45 ; Y_t = 30; Z_t = 500;
+%第一僚機速度
+V_x1 = 4 ; V_y1 = 3; V_z1 = 2;
+%第二僚機速度
+V_x2 = 2.5 ; V_y2 = 3; V_z2 = 5;
+%領頭速度
+V_xt = 12; V_yt =10; V_zt = 0;
+%gain值
+k1_1 = 0.005 ; k1_2 = 0.01;
+k2_1 = 0.01 ; k2_2 = 0.02;
+set(gca,'xlim',[-6000 6000],'ylim',[-6000 6000],'zlim',[-3000 3000]);
+view(-30,50);  % 改變觀測角度
+hold on
+ t = 1;
+for i = 0:2000
+   
+    %zeta = 1.04720 ; theta = 0.78539;  %theta = 45度 zeta = 60度
+    
+    %A = [X_t , Y_t , Z_t];
+    %B = 10*[cos(2.*pi.*0.001.*i) -sin(2.*pi.*0.001.*i) 0 ; sin(2.*pi.*0.001.*i) cos(2.*pi.*0.001.*i) 0 ; 0 0 2];
+    %A = A + A*B;
+    
+    % Position of Leader in 3 axis.
+    X_t = X_t - 75.*sin(i./100*pi); % other:10為半徑 10.*sin(2.*pi.*0.001.*i) 
+    Y_t = Y_t + 75.*cos(i./100*pi) ;
+    Z_t =  Z_t + V_zt.*t;
+    
+     
+    %Followers於20秒開始加速
+    
+    
+    
+   
+    a_x1 = -k1_1.*(X_1 - (X_t + (150).*cos(i./100*pi)))-k1_2.*(V_x1 - V_xt);  % other:X_t-10*75*pi./180
+    V_x1 = V_x1 + a_x1.*t;
+    X_1 = X_1+V_x1.*t+0.5.*a_x1.^2;
+    
+    head1 = scatter3(X_t, Y_t, Z_t,'o','markeredgecolor','r');
+    if i >= 25  
+   
+    a_y1 = -k1_1.*(Y_1 - (Y_t - (150).*sin(i./100*pi)))-k1_2.*(V_y1 - V_yt);
+    V_y1 = V_y1 + a_y1.*t;
+    Y_1 = Y_1 + V_y1.*t+0.5.*a_y1.^2;
+    
+   
+    a_z1 = -k1_1.*(Z_1 - (Z_t))-k1_2.*(V_z1 - V_zt);
+    V_z1 = V_z1 + a_z1.*t;
+    Z_1 = Z_1 + V_z1.*t+0.5.*a_z1.^2;
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+   
+    a_x2 = -k2_1.*(X_2 -( X_t + (100).*cos(i./100*pi)))-k2_2.*(V_x2 - V_xt);
+    V_x2 = V_x2 + a_x2.*t;
+    X_2 =  X_2 + V_x2.*t+0.5.*a_x2.^2;
+    
+   
+    a_y2 = -k2_1.*(Y_2 - (Y_t - (100).*sin(i./100*pi) ))-k2_2.*(V_y2 - V_yt);
+    V_y2 = V_y2 + a_y2.*t;
+    Y_2 = Y_2 + V_y2.*t+0.5.*a_y2.^2 ;
+    
+    
+    a_z2 = -k2_1.*(Z_2 - (Z_t))-k2_2.*(V_z2 - V_zt);
+    V_z2 = V_z2 + a_z2.*t;
+    Z_2 = Z_2 + V_z2.*t+0.5.*a_z2.^2;
+    
+    % Leader
+    head1 = scatter3(X_t, Y_t, Z_t,'o','markeredgecolor','r');
+    % Follower
+    head2 = scatter3(X_1, Y_1, Z_1,'x','markeredgecolor','b');
+    head3 = scatter3(X_2, Y_2, Z_2,'*','markeredgecolor','g');
+    
+    
+    pause(0.05)
+   % delete (head1)
+   % delete(head2)
+   % delete(head3)
+    hold on
+    grid on
+    end
+end
