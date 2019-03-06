@@ -1,0 +1,33 @@
+% Main function
+% To determine the Orbit of Satellite. 
+clear;
+clc;
+clf;
+
+global mu
+mu = 3.986e5;
+x0 = [5000 3 5000 4 5000 5];
+tsp = [0 14000];  % 14000 seconds
+[t,x] = ode45('demo_df', tsp, x0)
+subplot(2,2,1);
+plot3(x(:,1),x(:,3),x(:,5));
+subplot(2,2,2);
+plot(x(:,1),x(:,3));
+subplot(2,2,3);
+plot(x(:,1),x(:,5));
+subplot(2,2,4);
+plot(x(:,3),x(:,5
+
+
+% Subroutine
+function dx = demo_df(t,x)
+global mu
+dx = zeros(6,1);
+r = sqrt(x(1)^2 + x(3)^2 + x(5)^2);
+% x1=x, x2=vx, x3=y, x4=vy, x5=z, x6=vz
+dx(1) = x(2);
+dx(2) = -mu / (r^3)*x(1);
+dx(3) = x(4);
+dx(4) = -mu / (r^3)*x(3);
+dx(5) = x(6);
+dx(6) = -mu / (r^3)*x(5);
