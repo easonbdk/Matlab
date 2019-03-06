@@ -8,7 +8,8 @@ global mu
 mu = 3.986e5;
 x0 = [5000 3 5000 4 5000 5];
 tsp = [0 14000];  % 14000 seconds
-[t,x] = ode45('demo_df', tsp, x0)
+odeopt = odeset('RelTol',1e-8);
+[t,x] = ode45('demo_df', tsp, x0, odeopt)
 subplot(2,2,1);
 plot3(x(:,1),x(:,3),x(:,5));
 subplot(2,2,2);
