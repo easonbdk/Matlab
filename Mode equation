@@ -1,0 +1,22 @@
+clc;
+clf;
+close;
+clear;
+set(gcf,'color',[0.9 0.8 0.84]);
+% Eigenvalues
+a = [1.8751 4.6941 7.8548];
+
+% Length of cantilever beam
+L = 46;
+
+% Mode Equation
+for i=1:3
+alpha = a(i);
+x=0:0.01:46
+A = ((cos(alpha*L) + cosh(alpha*L)) / ((-sin(alpha*L)) - (sinh(alpha*L))) * (sin(alpha*x) - (sinh(alpha*x))));
+B = (cos(alpha*x) - cosh(alpha*x));
+phi = A+B
+axis([0, 1, -inf, inf]);
+plot(x,phi)
+hold on
+end
