@@ -18,7 +18,7 @@ g = 9.81;
 I = diag([6 5 4.5]);
 x0 = [0 0 0 0 0 0 0 10*pi/180 0];    % In radian
 tsp = [0 60];            % Time Series Processor
-[t,x]  = ode45('HW6_Q1b_function', tsp, x0);
+[t,x]  = ode45('linearize', tsp, x0);
 sgtitle  ('Time history of Linearized Velocity, Angularrates, and Euler angles','FontWeight','bold','fontsize',14);
 for i = 1:3
     subplot(2,2,i);
