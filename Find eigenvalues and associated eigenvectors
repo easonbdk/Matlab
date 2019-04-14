@@ -1,0 +1,30 @@
+% Author: Eason Chen
+% Date: Apr. 12th, 2019
+%
+% Find the eigenvalues and the associated eigenvectors of A matrix.
+% Solve x'=Ax analytically.
+%
+% The characteristic equation for an 9x9 matrix to determine the 9
+% eigenvalues is in general an nineth order polynomial.
+% By Abel's Impossibility Theorem : In general, polynomial equations higher than fourth degree 
+% are incapable of algebraic solution in terms of a finite number of additions, subtractions, multiplications, divisions, and root extractions.
+% Directly using the function eig in Matlab to determine. 
+% The output is not given in analytic form.
+% For the initial condition: x0 = [0 0 0 0 0 0 0 10degree 0]
+% Substitute the initial condition into the A matrix.
+%
+clc;
+clf;
+close;
+clear;
+x = 10*pi/180;    % The initial condition for x = 10 degree and convert it to radian.
+A = [0 0 0 0 0 0 0 -(1/4)*sin(x) 0;  
+0 0 0 0 0 0 0 0 0;
+0 0 0 0 0 0 0 5/12 0;
+0 0 0 0 0 0 0 0 0;
+0 0 0 0 0 0 0 0.02 0;
+0 0 0 0 0 0 0 0 1/450;
+0 0 0 2*cos(x) 0 0 0 0 0;
+0 0 0 0 -cos(x) 0 0 0 0;
+0 0 0 sin(x) 0 cos(x) 0 0 0];
+[V,D] = eig(A)
